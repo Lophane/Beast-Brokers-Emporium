@@ -22,18 +22,6 @@ public class Dialogue : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (textComponent.text == lines[index])
-            {
-                NextLine();
-            }
-            else
-            {
-                StopAllCoroutines();
-                textComponent.text = lines[index];
-            }
-        }
     }
 
     void StartDialogue()
@@ -51,17 +39,26 @@ public class Dialogue : MonoBehaviour
         }
     }
 
-    void NextLine()
+    public void NextLine()
     {
-        if (index < lines.Length - 1)
+
+        if (textComponent.text == lines[index])
         {
-            index++;
-            textComponent.text = string.Empty;
-            StartCoroutine(TypeLine());
+            if (index < lines.Length - 1)
+            {
+                index++;
+                textComponent.text = string.Empty;
+                StartCoroutine(TypeLine());
+            }
+            else
+            {
+                gameObject.SetActive(false);
+            }
         }
         else
         {
-            gameObject.SetActive(false); 
+            StopAllCoroutines();
+            textComponent.text = lines[index];
         }
     }
 
